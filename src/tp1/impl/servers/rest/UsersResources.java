@@ -57,11 +57,7 @@ public class UsersResources extends RestResource implements RestUsers {
 	public User deleteUser(String userId, String password) {
 		Log.info(String.format("REST deleteUser: userId = %s\n", userId));
 
-		//String message = userId + " " + password;
 
-		//publisher.publish(TOPIC, message);
-
-		
 		return resultOrThrow( impl.deleteUser(userId, password));
 	}
 

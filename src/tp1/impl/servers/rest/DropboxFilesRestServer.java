@@ -32,7 +32,6 @@ public class DropboxFilesRestServer extends AbstractRestServer {
     void registerResources(ResourceConfig config) {
         config.register( new DropboxFilesResources(apiKey, apiSecret, accessTokenStr, flag) );
         config.register( GenericExceptionMapper.class );
-//		config.register( CustomLoggingFilter.class);
     }
 
     public static void main(String[] args) {

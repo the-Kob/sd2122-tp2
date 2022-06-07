@@ -32,16 +32,6 @@ public class DirectoryResources extends RestResource implements RestDirectory {
 
 	public DirectoryResources() {
 		impl = new JavaDirectory();
-
-		//var subscriber = KafkaSubscriber.createSubscriber(KAFKA_BROKERS , List.of(TOPIC),
-		//FROM_BEGINNING);
-
-		//subscriber.start(false, (r) -> {
-
-		//	String[] message = r.value().split(" ");
-			
-		//	deleteUserFiles(message[0], message[1], Token.get());
-		//});
 	}
 
 	public FileInfo writeFile(String filename, byte[] data, String userId, String password) {

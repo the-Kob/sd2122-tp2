@@ -24,7 +24,6 @@ public class FilesRestServer extends AbstractRestServer {
 	void registerResources(ResourceConfig config) {
 		config.register( FilesResources.class ); 
 		config.register( GenericExceptionMapper.class );
-//		config.register( CustomLoggingFilter.class);
 	}
 	
 	public static void main(String[] args) throws Exception {

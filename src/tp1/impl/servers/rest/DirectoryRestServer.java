@@ -24,7 +24,6 @@ public class DirectoryRestServer extends AbstractRestServer {
 	void registerResources(ResourceConfig config) {
 		config.register( DirectoryResources.class ); 
 		config.register( GenericExceptionMapper.class );		
-//		config.register( CustomLoggingFilter.class);
 	}
 	
 	public static void main(String[] args) throws Exception {
