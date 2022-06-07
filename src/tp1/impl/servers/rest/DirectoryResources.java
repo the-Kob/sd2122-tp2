@@ -15,7 +15,7 @@ import tp1.api.service.java.Result.ErrorCode;
 import tp1.api.service.rest.RestDirectory;
 import tp1.impl.servers.common.JavaDirectory;
 import util.Token;
-import tp1.impl.servers.kafka.KafkaSubscriber;
+//import tp1.impl.servers.kafka.KafkaSubscriber;
 
 @Singleton
 public class DirectoryResources extends RestResource implements RestDirectory {
@@ -25,7 +25,7 @@ public class DirectoryResources extends RestResource implements RestDirectory {
 
 	static final String KAFKA_BROKERS = "kafka:9092";
 	static final String TOPIC = "delete_user";
-	private static final String FROM_BEGINNING = "earliest";
+	//private static final String FROM_BEGINNING = "earliest";
 
 
 	final Directory impl;

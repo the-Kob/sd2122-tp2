@@ -1,7 +1,7 @@
 package tp1.impl.servers.rest;
 
 import java.net.URI;
-import java.util.Map;
+//import java.util.Map;
 import java.util.Queue;
 
 import jakarta.ws.rs.WebApplicationException;
@@ -9,10 +9,10 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import tp1.api.service.java.Result;
 import tp1.impl.servers.common.JavaDirectory;
-import tp1.impl.servers.common.JavaFiles;
+//import tp1.impl.servers.common.JavaFiles;
 import util.Token;
 
-import static util.Hash.of;
+//import static util.Hash.of;
 
 public class RestResource {
 

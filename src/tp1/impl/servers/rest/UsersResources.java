@@ -8,7 +8,7 @@ import tp1.api.User;
 import tp1.api.service.java.Users;
 import tp1.api.service.rest.RestUsers;
 import tp1.impl.servers.common.JavaUsers;
-import tp1.impl.servers.kafka.KafkaPublisher;
+//import tp1.impl.servers.kafka.KafkaPublisher;
 
 
 @Singleton
