@@ -1,0 +1,23 @@
+
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+\
+,src/tp1/impl/clients/common/RetryClient.java,9\3\939a0a947f5fc201d98afc9645b380247cbd1bdc
+a
+1src/tp1/impl/clients/common/RetryFilesClient.java,7\c\7cd62985b478b45aa863715b1e9380fefefb84ba
+U
+%src/tp1/impl/discovery/Discovery.java,9\4\94da26b39fee1c8f02c7bb18f323c58f01ab37bb
+W
+'src/tp1/api/service/rest/RestUsers.java,d\b\dbfd355078e49519e9daa8ce58a383167d94776d
+e
+5src/tp1/impl/clients/common/RetryDirectoryClient.java,d\b\db4a58a6699225272c0dca9216fec465f6fee42c
+b
+2src/tp1/impl/clients/rest/RestDirectoryClient.java,d\0\d078649fdffa728b68b83cbe03f5899b2eb7641c
+Y
+)src/tp1/impl/clients/rest/RestClient.java,c\7\c72cdab6dd7b1002165dd976ff9379db9ca244ae
+Q
+!src/tp1/impl/clients/Clients.java,a\5\a556fae55df02cc075fa906a0fb2fb65cb9763a1
+W
+'src/tp1/impl/clients/ClientFactory.java,e\a\ea64e2f5b417ae58c430867ed12503fbffd973c3
+@
+src/util/IO.java,d\b\dbefddb3abd442d08fb56600592f4c2eeb0637c4
