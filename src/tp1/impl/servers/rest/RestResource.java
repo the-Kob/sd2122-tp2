@@ -16,8 +16,6 @@ import static util.Hash.of;
 
 public class RestResource {
 
-	private static final String REST = "rest";
-
 	/**
 	 * Given a Result<T>, either returns the value, or throws the JAX-WS Exception
 	 * matching the error code...
@@ -51,7 +49,6 @@ public class RestResource {
 			return result.value() == null ? Status.NO_CONTENT : Status.OK;
 		case REDIRECT:
 			doRedirect(result);
-
 		default:
 			return Status.INTERNAL_SERVER_ERROR;
 		}
@@ -61,13 +58,9 @@ public class RestResource {
 		Queue<String> uris = result.errorValue();
 		String uriToEnd = uris.remove();
 		String fileId = JavaDirectory.fileIdFromURL(uriToEnd);
-		String uriWithToken = uriToEnd + "?token=" + token(fileId, System.currentTimeMillis());
+		String uriWithToken = uriToEnd + "?token=" + Token.createToken(fileId, System.currentTimeMillis());
+		System.out.println(fileId + " " + uriWithToken);
 		uris.add(uriToEnd);
 		throw new WebApplicationException(Response.temporaryRedirect(URI.create(uriWithToken)).build());
-	}
-
-	private static String token(String id, long currTime) {
-		String msg = id + currTime + Token.get();
-		return of(msg) + "/" + currTime;
 	}
 }

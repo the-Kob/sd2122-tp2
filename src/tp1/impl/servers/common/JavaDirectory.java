@@ -37,7 +37,6 @@ import util.Token;
 public class JavaDirectory implements Directory {
 
 	static final long USER_CACHE_EXPIRATION = 3000;
-	static final int TKN_TIMEOUT = 10000;
 
 	final LoadingCache<UserInfo, Result<User>> users = CacheBuilder.newBuilder()
 			.expireAfterWrite( Duration.ofMillis(USER_CACHE_EXPIRATION))
@@ -80,7 +79,7 @@ public class JavaDirectory implements Directory {
 				if(count == 2) break;
 				String fileURL = String.format("%s/files/%s", uri, fileId);
 				long time = System.currentTimeMillis();
-				var result = FilesClients.get(uri).writeFile(fileId, data, token(fileId, time));
+				var result = FilesClients.get(uri).writeFile(fileId, data, Token.createToken(fileId, time));
 				if (result.isOK()) {
 					uris.add(fileURL);
 					count++;
@@ -124,7 +123,7 @@ public class JavaDirectory implements Directory {
 			executor.execute(() -> {
 				this.removeSharesOfFile(info);
 				for (var uri : file.uris()) {
-					FilesClients.get(uri).deleteFile(fileId, token(fileId, System.currentTimeMillis()));
+					FilesClients.get(uri).deleteFile(fileId, Token.createToken(fileId, System.currentTimeMillis()));
 				}
 			});
 
@@ -240,7 +239,7 @@ public class JavaDirectory implements Directory {
 	
 	@Override
 	public Result<Void> deleteUserFiles(String userId, String password, String token) {
-		if(!validateToken(userId, token)) return error( FORBIDDEN );
+		if(!Token.validateToken(userId, token)) return error( FORBIDDEN );
 		users.invalidate( new UserInfo(userId, password));
 		
 		var fileIds = userFiles.remove(userId);
@@ -296,21 +295,6 @@ public class JavaDirectory implements Directory {
 	public static String fileIdFromURL(String url) {
 		String[] tokens = url.split("/files/");
 		return tokens[1];
-	}
-
-	private String token(String id, long currTime) {
-		String msg = id + currTime + Token.get();
-		return of(msg) + "/" + currTime;
-	}
-
-	private boolean validateToken(String id, String token) {
-		if(token == null) return false;
-		String[] tokens = token.split("/");
-		long time = parseLong(tokens[1]);
-		String newToken = token(id, time);
-		if(System.currentTimeMillis() - time > TKN_TIMEOUT) return false;
-		if(!token.equals(newToken)) return false;
-		return true;
 	}
 	
 	static record ExtendedFileInfo(Queue<String> uris, String fileId, FileInfo info) {

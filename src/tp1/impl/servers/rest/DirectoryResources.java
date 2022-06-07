@@ -74,7 +74,7 @@ public class DirectoryResources extends RestResource implements RestDirectory {
 				if (loc.contains(SOAP)) {
 					soapl.add(loc);
 					String fileId = JavaDirectory.fileId(filename, userId);
-					res = FilesClients.get(loc).getFile(fileId, token(fileId, System.currentTimeMillis()));
+					res = FilesClients.get(loc).getFile(fileId, Token.createToken(fileId, System.currentTimeMillis()));
 					if(res.isOK()) break;
 				} else restl.add(loc);
 			}
@@ -103,10 +103,5 @@ public class DirectoryResources extends RestResource implements RestDirectory {
 		Log.info(String.format("REST deleteUserFiles: user = %s, password = %s, token = %s\n", userId, password, token));
 
 		super.resultOrThrow(impl.deleteUserFiles(userId, password, token));
-	}
-
-	private String token(String id, long currTime) {
-		String msg = id + currTime + Token.get();
-		return of(msg) + "/" + currTime;
 	}
 }

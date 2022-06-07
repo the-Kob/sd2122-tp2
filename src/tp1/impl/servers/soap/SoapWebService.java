@@ -15,6 +15,5 @@ public class SoapWebService {
 			return result.value();
 		else
 			throw exceptionMapper.apply( result.error().toString() );
-
 	}
 }

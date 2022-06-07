@@ -47,8 +47,6 @@ public class JavaDropboxFiles implements Files {
 
     private static final String ROOT = "files";
 
-    private static final int TKN_TIMEOUT = 10000;
-
     private final Gson json;
     private final OAuth20Service service;
     private final OAuth2AccessToken accessToken;
@@ -59,13 +57,13 @@ public class JavaDropboxFiles implements Files {
         this.service = new ServiceBuilder(apiKey).apiSecret(apiSecret).build(DropboxApi20.INSTANCE);
 
         if(flag) {
-            deleteFile(ROOT, token(ROOT, System.currentTimeMillis()));
+            deleteFile(ROOT, Token.createToken(ROOT, System.currentTimeMillis()));
         }
     }
 
     @Override
     public Result<byte[]> getFile(String fileId, String token) {
-        if(!validateToken(fileId, token)) return error( FORBIDDEN );
+        if(!Token.validateToken(fileId, token)) return error( FORBIDDEN );
         try {
             String filePath = String.format("%s/%s", ROOT, fileId.replace(DELIMITER, "/"));
 
@@ -94,7 +92,7 @@ public class JavaDropboxFiles implements Files {
 
     @Override
     public Result<Void> deleteFile(String fileId, String token) {
-        if(!validateToken(fileId, token)) return error( FORBIDDEN );
+        if(!Token.validateToken(fileId, token)) return error( FORBIDDEN );
         try {
             String filePath = String.format("%s/%s", ROOT, fileId.replace(DELIMITER, "/"));
 
@@ -135,7 +133,7 @@ public class JavaDropboxFiles implements Files {
 
     @Override
     public Result<Void> writeFile(String fileId, byte[] data, String token) {
-        if(!validateToken(fileId, token)) return error( FORBIDDEN );
+        if(!Token.validateToken(fileId, token)) return error( FORBIDDEN );
         try {
             String filePath = String.format("%s/%s", ROOT, fileId.replace(DELIMITER, "/"));
 
@@ -164,7 +162,7 @@ public class JavaDropboxFiles implements Files {
 
     @Override
     public Result<Void> deleteUserFiles(String userId, String token) {
-        if(!validateToken(userId, token)) return error( FORBIDDEN );
+        if(!Token.validateToken(userId, token)) return error( FORBIDDEN );
         try {
             String filePath = String.format("%s/%s", ROOT, userId);
 
@@ -188,20 +186,5 @@ public class JavaDropboxFiles implements Files {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String token(String id, long currTime) {
-        String msg = id + currTime + Token.get();
-        return of(msg) + "/" + currTime;
-    }
-
-    private boolean validateToken(String id, String token) {
-        if(token == null) return false;
-        String[] tokens = token.split("/");
-        long time = parseLong(tokens[1]);
-        String newToken = token(id, time);
-        if(System.currentTimeMillis() - time > TKN_TIMEOUT) return false;
-        if(!token.equals(newToken)) return false;
-        return true;
     }
 }

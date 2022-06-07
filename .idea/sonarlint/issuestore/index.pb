@@ -21,3 +21,11 @@ W
 'src/tp1/impl/clients/ClientFactory.java,e\a\ea64e2f5b417ae58c430867ed12503fbffd973c3
 @
 src/util/IO.java,d\b\dbefddb3abd442d08fb56600592f4c2eeb0637c4
+b
+2src/tp1/impl/servers/soap/SoapUsersWebService.java,5\a\5a572a758366ffc10ebc04615889e0e1bf8bffaa
+^
+.src/tp1/impl/clients/soap/SoapFilesClient.java,9\f\9ff67ce252c989eec5a4ff9fbde1f2dc1ed4d6f9
+b
+2src/tp1/impl/servers/soap/SoapFilesWebService.java,4\a\4a1a1ef5357cd7a9fdd00ef97a71b01f49deb7ac
+`
+0src/tp1/api/service/soap/DirectoryException.java,6\a\6a308747b24a44502e4ccd680520174f5faf576e

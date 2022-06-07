@@ -2,7 +2,9 @@ package tp1.impl.servers.soap;
 
 import static tp1.impl.clients.Clients.FilesClients;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.logging.Logger;
 
 import jakarta.jws.WebService;
@@ -12,6 +14,7 @@ import tp1.api.service.java.Result.ErrorCode;
 import tp1.api.service.soap.DirectoryException;
 import tp1.api.service.soap.SoapDirectory;
 import tp1.impl.servers.common.JavaDirectory;
+import util.Token;
 
 @WebService(serviceName = SoapDirectory.NAME, targetNamespace = SoapDirectory.NAMESPACE, endpointInterface = SoapDirectory.INTERFACE)
 public class SoapDirectoryWebService extends SoapWebService implements SoapDirectory {
@@ -62,12 +65,20 @@ public class SoapDirectoryWebService extends SoapWebService implements SoapDirec
 	public byte[] getFile(String filename, String userId, String accUserId, String password) throws DirectoryException {
 		Log.info(String.format("SOAP getFile: filename = %s, userId = %s, accUserId = %s, password =%s\n", filename,
 				userId, accUserId, password));
-
 		
 		var res = impl.getFile(filename, userId, accUserId, password);
 		if( res.error() == ErrorCode.REDIRECT) {
-			String location = res.errorValue();
-			res = FilesClients.get( location ).getFile( JavaDirectory.fileId(filename, userId), password);
+			List<String> aux = new ArrayList<>();
+			Queue<String> uris = res.errorValue();
+			System.out.println(res.error());
+			while(!uris.isEmpty()) {
+				String loc = uris.remove();
+				aux.add(loc);
+				String fileId = JavaDirectory.fileId(filename, userId);
+				res = FilesClients.get(loc).getFile(fileId, Token.createToken(fileId, System.currentTimeMillis()));
+				if (res.isOK()) break;
+			}
+			uris.addAll(aux);
 		}
 		return super.resultOrThrow(res, DirectoryException::new);
 	}

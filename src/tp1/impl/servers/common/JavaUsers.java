@@ -84,9 +84,9 @@ public class JavaUsers implements Users {
 		else {
 			users.remove(userId);
 			executor.execute(()->{
-				DirectoryClients.get().deleteUserFiles(userId, password, token(userId, System.currentTimeMillis()));
+				DirectoryClients.get().deleteUserFiles(userId, password, Token.createToken(userId, System.currentTimeMillis()));
 				for( var uri : FilesClients.all())
-					FilesClients.get(uri).deleteUserFiles( userId, token(userId, System.currentTimeMillis()));
+					FilesClients.get(uri).deleteUserFiles( userId, Token.createToken(userId, System.currentTimeMillis()));
 			});
 			return ok(user);
 		}
@@ -116,10 +116,5 @@ public class JavaUsers implements Users {
 	
 	private boolean wrongPassword(User user, String password) {
 		return !user.getPassword().equals(password);
-	}
-
-	private String token(String id, long currTime) {
-		String msg = id + currTime + Token.get();
-		return of(msg) + "/" + currTime;
 	}
 }
