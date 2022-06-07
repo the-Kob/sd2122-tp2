@@ -8,10 +8,17 @@ import tp1.api.User;
 import tp1.api.service.java.Users;
 import tp1.api.service.rest.RestUsers;
 import tp1.impl.servers.common.JavaUsers;
+import tp1.impl.servers.kafka.KafkaPublisher;
+
 
 @Singleton
 public class UsersResources extends RestResource implements RestUsers {
 	private static Logger Log = Logger.getLogger(UsersResources.class.getName());
+
+	static final String TOPIC = "delete_user";
+	static final String KAFKA_BROKERS = "kafka:9092";
+
+	//final KafkaPublisher publisher;
 
 	final Users impl ;
 	static UsersResources instance;
@@ -19,6 +26,8 @@ public class UsersResources extends RestResource implements RestUsers {
 	public UsersResources() {
 		impl = new JavaUsers();
 		instance = this;
+		//publisher = KafkaPublisher.createPublisher(KAFKA_BROKERS);
+
 	}
 	
 	@Override
@@ -47,6 +56,11 @@ public class UsersResources extends RestResource implements RestUsers {
 	@Override
 	public User deleteUser(String userId, String password) {
 		Log.info(String.format("REST deleteUser: userId = %s\n", userId));
+
+		//String message = userId + " " + password;
+
+		//publisher.publish(TOPIC, message);
+
 		
 		return resultOrThrow( impl.deleteUser(userId, password));
 	}

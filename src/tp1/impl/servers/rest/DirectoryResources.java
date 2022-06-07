@@ -15,6 +15,7 @@ import tp1.api.service.java.Result.ErrorCode;
 import tp1.api.service.rest.RestDirectory;
 import tp1.impl.servers.common.JavaDirectory;
 import util.Token;
+import tp1.impl.servers.kafka.KafkaSubscriber;
 
 @Singleton
 public class DirectoryResources extends RestResource implements RestDirectory {
@@ -22,10 +23,25 @@ public class DirectoryResources extends RestResource implements RestDirectory {
 
 	private static final String SOAP = "/soap/";
 
+	static final String KAFKA_BROKERS = "kafka:9092";
+	static final String TOPIC = "delete_user";
+	private static final String FROM_BEGINNING = "earliest";
+
+
 	final Directory impl;
 
 	public DirectoryResources() {
 		impl = new JavaDirectory();
+
+		//var subscriber = KafkaSubscriber.createSubscriber(KAFKA_BROKERS , List.of(TOPIC),
+		//FROM_BEGINNING);
+
+		//subscriber.start(false, (r) -> {
+
+		//	String[] message = r.value().split(" ");
+			
+		//	deleteUserFiles(message[0], message[1], Token.get());
+		//});
 	}
 
 	public FileInfo writeFile(String filename, byte[] data, String userId, String password) {
